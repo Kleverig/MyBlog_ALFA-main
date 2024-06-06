@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="uk">
+{% load static %}
+<head>
+    <title>MyBlog</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link type="text/css" href="{% static 'css/main.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="blog-title">
+            <img src="{% static 'images/blog_logo.gif' %}" alt="Логотип" class="logo">
+            <span class="blog-name">Мій Блог</span>
+            <img src="{% static 'images/blog_logo.gif' %}" alt="Логотип" class="logo">
+        </h1>
+        <div>
+            <ol class="breadcrumb">
+                <li><a href="/">Головна</a></li>
+                <li>{{ item.title|upper }}</li>
+                <li><a href="{% url 'articles-list' %}">Публікації</a></li>
+                
+            </ol>
+        </div>
+        <button onclick="topFunction()" id="backToTopBtn" title="Go to top">^</button>
+        {% block content %}
+        {% endblock %}
+    </div>
+    <!-- Javascripts Section -->
+    <script src="{% static 'js/jquery.js' %}" crossorigin="anonymous"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}" crossorigin="anonymous"></script>
+    <script>
+    // Отримуємо кнопку
+    let backToTopBtn = document.getElementById("backToTopBtn");
+    
+    // Показуємо кнопку, коли користувач прокручує вниз на 20 пікселів від верхньої частини документа
+    window.onscroll = function() {scrollFunction()};
+    
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            backToTopBtn.style.display = "block";
+        } else {
+            backToTopBtn.style.display = "none";
+        }
+    }
+    
+    // Прокручуємо на верх сторінки при натисканні на кнопку
+    function topFunction() {
+        document.body.scrollTop = 0; // Для Safari
+        document.documentElement.scrollTop = 0; // Для Chrome, Firefox, IE і Opera
+    }
+    </script>
+</body>
+</html>

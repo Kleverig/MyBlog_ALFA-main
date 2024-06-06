@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+{% spaceless %}
+    <div>
+        <h1>Про мене</h1>
+        <p> Цей блог створений з метою відображення мого різноманітного життя та інтересів. Я відданий музиці і граю на гітарі, співаю та знаю, як це добре виражати свої почуття через музику. Крім того, моє життя насичене спортом, зокрема волейболом, що додає енергії і здоров'я.
+
+            Завдяки програмуванню я відкриваю для себе нові можливості в технологічному світі, де можна реалізувати свої ідеї та проекти. А проведення часу з друзями надає мені радість і натхнення, вона допомагає розкрити свою творчість та збагатити життя різноманітними враженнями.
+            
+            На цьому блозі я поділюся своїми досвідом, враженнями, музикою та іншими цікавими аспектами мого життя, надіючись, що це буде цікаво для читачів і може стати вдихновенням для їхніх власних пригод та досягнень.</p>
+    </div>
+    <div class="photo-row">
+        <img src="{% static 'images/gitara.jpg' %}" alt="Image 1" >
+        <img src="{% static 'images/book.jpg' %}" alt="Image 2" >
+        <img src="{% static 'images/programing.png' %}" alt="Image 3" >
+    </div>
+    <div>
+        <h1>Досвід</h1>
+        <p> Під час стажування в IT-компаніях я здобув цінні практичні навички у розробці програмного забезпечення. Мені довелося працювати з різними сучасними технологіями, брати участь у командних проектах, а також вивчати методології розробки програмного забезпечення. Цей досвід допоміг мені глибше зрозуміти процеси розробки, покращити свої технічні знання та навички співпраці в команді.</p>
+    </div>
+{% if categories %}
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+            {% for item in categories %}
+                <a href="{{ item.get_absolute_url }}">
+                    <h4>{{ item.category }}</h4>
+                </a>
+            {% endfor %}
+        </div>
+    </nav>
+{% endif %}
+
+    
+    {% if articles %}
+        {% for item in articles %}
+            <div class="article-block">
+                <a href="{{ item.get_absolute_url }}">
+                    <h4 class="article-title">{{ item.title }}</h4>
+                </a>
+                <h5>
+                    {{ item.pub_date|date:"j E Y"|safe|linebreaks }}
+                </h5>
+                <p>
+                    {{ item.description|safe|escape|striptags|truncatewords_html:32 }}
+                </p>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="ar-list">
+        <a href="{% url 'articles-list' %}" class="button-link">
+            Всі публікації
+        </a>
+    </div>
+{% endspaceless %}
+{% endblock %}
+
+
